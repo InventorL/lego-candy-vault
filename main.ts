@@ -96,6 +96,14 @@ function winner () {
     strip.setPixelColor(11, neopixel.rgb(100, 0, 100))
     strip.show()
     basic.pause(200)
+    strip.setPixelColor(12, neopixel.colors(NeoPixelColors.Purple))
+    strip.show()
+    basic.pause(200)
+    strip.setPixelColor(13, neopixel.colors(NeoPixelColors.White))
+    strip.show()
+    basic.pause(500)
+    strip.showColor(neopixel.colors(NeoPixelColors.Black))
+    control.reset()
 }
 function Row1 () {
     while (pins.digitalReadPin(DigitalPin.P13) == 0) {
@@ -164,11 +172,18 @@ function ShowPattern () {
     greenled.setPixelColor(password.length, neopixel.colors(NeoPixelColors.Black))
     greenled.showColor(neopixel.colors(NeoPixelColors.Black))
 }
-let greenled: neopixel.Strip = null
-let strip: neopixel.Strip = null
 let Guess_mode = false
 let guess = ""
 let password = ""
+let greenled: neopixel.Strip = null
+let strip: neopixel.Strip = null
+pins.servoWritePin(AnalogPin.P2, 70)
+let Locked = true
+pins.servoWritePin(AnalogPin.P1, 0)
+strip = neopixel.create(DigitalPin.P16, 14, NeoPixelMode.RGB)
+greenled = neopixel.create(DigitalPin.P0, 10, NeoPixelMode.RGB)
+strip.showColor(neopixel.colors(NeoPixelColors.Black))
+greenled.showColor(neopixel.colors(NeoPixelColors.Black))
 let Letters = [
 "a",
 "b",
@@ -180,16 +195,10 @@ let Letters = [
 "h",
 "i"
 ]
-password = Letters._pickRandom()
+password = ""
 guess = ""
 Guess_mode = false
-strip = neopixel.create(DigitalPin.P16, 14, NeoPixelMode.RGB)
-greenled = neopixel.create(DigitalPin.P0, 10, NeoPixelMode.RGB)
-pins.servoWritePin(AnalogPin.P2, 70)
-let Locked = true
-pins.servoWritePin(AnalogPin.P1, 0)
-strip.showColor(neopixel.colors(NeoPixelColors.Black))
-greenled.showColor(neopixel.colors(NeoPixelColors.Black))
+basic.pause(1000)
 basic.forever(function () {
     if (Locked == true) {
         while (input.magneticForce(Dimension.X) < 65 && input.magneticForce(Dimension.X) > 55) {
