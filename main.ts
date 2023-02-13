@@ -74,6 +74,29 @@ function Row2 () {
         ButtonPress("f")
     }
 }
+function winner () {
+    strip.setPixelColor(1, neopixel.colors(NeoPixelColors.Red))
+    strip.show()
+    basic.pause(200)
+    strip.setPixelColor(2, neopixel.hsl(32, 255, 40))
+    strip.show()
+    basic.pause(200)
+    strip.setPixelColor(3, neopixel.colors(NeoPixelColors.Yellow))
+    strip.show()
+    basic.pause(200)
+    strip.setPixelColor(6, neopixel.colors(NeoPixelColors.Green))
+    strip.show()
+    basic.pause(200)
+    strip.setPixelColor(7, neopixel.colors(NeoPixelColors.Blue))
+    strip.show()
+    basic.pause(200)
+    strip.setPixelColor(8, neopixel.hsl(246, 250, 30))
+    strip.show()
+    basic.pause(200)
+    strip.setPixelColor(11, neopixel.rgb(100, 0, 100))
+    strip.show()
+    basic.pause(200)
+}
 function Row1 () {
     while (pins.digitalReadPin(DigitalPin.P13) == 0) {
         strip.setPixelColor(1, neopixel.colors(NeoPixelColors.Red))
@@ -96,58 +119,52 @@ function Row1 () {
     strip.showColor(neopixel.colors(NeoPixelColors.Black))
 }
 function ShowPattern () {
-    if (Guess_mode == false) {
-        for (let value of password) {
-            if (value == "a") {
-                strip.setPixelColor(1, neopixel.colors(NeoPixelColors.Red))
-                strip.show()
-                basic.pause(500)
-                strip.showColor(neopixel.colors(NeoPixelColors.Black))
-            } else if (value == "b") {
-                strip.setPixelColor(2, neopixel.hsl(32, 255, 40))
-                strip.show()
-                basic.pause(500)
-                strip.showColor(neopixel.colors(NeoPixelColors.Black))
-            } else if (value == "c") {
-                strip.setPixelColor(3, neopixel.colors(NeoPixelColors.Yellow))
-                strip.show()
-                basic.pause(500)
-                strip.showColor(neopixel.colors(NeoPixelColors.Black))
-            } else if (value == "d") {
-                strip.setPixelColor(6, neopixel.colors(NeoPixelColors.Green))
-                strip.show()
-                basic.pause(500)
-                strip.showColor(neopixel.colors(NeoPixelColors.Black))
-            } else if (value == "e") {
-                strip.setPixelColor(7, neopixel.colors(NeoPixelColors.Blue))
-                strip.show()
-                basic.pause(500)
-                strip.showColor(neopixel.colors(NeoPixelColors.Black))
-            } else if (value == "f") {
-                strip.setPixelColor(8, neopixel.hsl(246, 250, 30))
-                strip.show()
-                basic.pause(500)
-                strip.showColor(neopixel.colors(NeoPixelColors.Black))
-            } else if (value == "g") {
-                strip.setPixelColor(11, neopixel.rgb(100, 0, 100))
-                strip.show()
-                basic.pause(500)
-                strip.showColor(neopixel.colors(NeoPixelColors.Black))
-            } else if (value == "h") {
-                strip.setPixelColor(12, neopixel.colors(NeoPixelColors.Purple))
-                strip.show()
-                basic.pause(500)
-                strip.showColor(neopixel.colors(NeoPixelColors.Black))
-            } else {
-                strip.setPixelColor(13, neopixel.colors(NeoPixelColors.White))
-                strip.show()
-                basic.pause(500)
-                strip.showColor(neopixel.colors(NeoPixelColors.Black))
-            }
+    greenled.setPixelColor(password.length, neopixel.colors(NeoPixelColors.Green))
+    greenled.show()
+    for (let value of password) {
+        if (value == "a") {
+            strip.setPixelColor(1, neopixel.colors(NeoPixelColors.Red))
+            strip.show()
+            basic.pause(500)
+        } else if (value == "b") {
+            strip.setPixelColor(2, neopixel.hsl(32, 255, 40))
+            strip.show()
+            basic.pause(500)
+        } else if (value == "c") {
+            strip.setPixelColor(3, neopixel.colors(NeoPixelColors.Yellow))
+            strip.show()
+            basic.pause(500)
+        } else if (value == "d") {
+            strip.setPixelColor(6, neopixel.colors(NeoPixelColors.Green))
+            strip.show()
+            basic.pause(500)
+        } else if (value == "e") {
+            strip.setPixelColor(7, neopixel.colors(NeoPixelColors.Blue))
+            strip.show()
+            basic.pause(500)
+        } else if (value == "f") {
+            strip.setPixelColor(8, neopixel.hsl(246, 250, 30))
+            strip.show()
+            basic.pause(500)
+        } else if (value == "g") {
+            strip.setPixelColor(11, neopixel.rgb(100, 0, 100))
+            strip.show()
+            basic.pause(500)
+        } else if (value == "h") {
+            strip.setPixelColor(12, neopixel.colors(NeoPixelColors.Purple))
+            strip.show()
+            basic.pause(500)
+        } else {
+            strip.setPixelColor(13, neopixel.colors(NeoPixelColors.White))
+            strip.show()
+            basic.pause(500)
         }
-        Guess_mode = true
     }
+    strip.showColor(neopixel.colors(NeoPixelColors.Black))
+    greenled.setPixelColor(password.length, neopixel.colors(NeoPixelColors.Black))
+    greenled.showColor(neopixel.colors(NeoPixelColors.Black))
 }
+let greenled: neopixel.Strip = null
 let strip: neopixel.Strip = null
 let Guess_mode = false
 let guess = ""
@@ -167,7 +184,7 @@ password = Letters._pickRandom()
 guess = ""
 Guess_mode = false
 strip = neopixel.create(DigitalPin.P16, 14, NeoPixelMode.RGB)
-let greenled = neopixel.create(DigitalPin.P0, 10, NeoPixelMode.RGB)
+greenled = neopixel.create(DigitalPin.P0, 10, NeoPixelMode.RGB)
 pins.servoWritePin(AnalogPin.P2, 70)
 let Locked = true
 pins.servoWritePin(AnalogPin.P1, 0)
@@ -186,6 +203,24 @@ basic.forever(function () {
     }
 })
 basic.forever(function () {
+    if (Guess_mode == false) {
+        if (password.length == 5) {
+            music.playSoundEffect(music.builtinSoundEffect(soundExpression.twinkle), SoundExpressionPlayMode.InBackground)
+            greenled.setPixelColor(password.length, neopixel.colors(NeoPixelColors.Green))
+            greenled.show()
+            pins.servoWritePin(AnalogPin.P1, 150)
+            winner()
+        } else {
+            greenled.setPixelColor(password.length, neopixel.colors(NeoPixelColors.Green))
+            greenled.show()
+            basic.pause(500)
+            password = "" + password + Letters._pickRandom()
+            ShowPattern()
+            Guess_mode = true
+        }
+    }
+})
+basic.forever(function () {
     if (Guess_mode == true) {
         pins.digitalWritePin(DigitalPin.P11, 0)
         Row1()
@@ -196,12 +231,5 @@ basic.forever(function () {
         pins.digitalWritePin(DigitalPin.P9, 0)
         Row3()
         pins.digitalWritePin(DigitalPin.P9, 1)
-        basic.showLeds(`
-            . . . . .
-            . . . . .
-            . . . . .
-            . . . . .
-            . . . . .
-            `)
     }
 })
