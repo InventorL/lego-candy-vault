@@ -1,16 +1,14 @@
-/**
- * Wheel Servo: P1
- * 
- *  Lock Servo: P2
- * 
- * Green LEDs: P0 (Active 1-5)
- * 
- * Keypad LEDs: P16 (Active: 1-3 6-8, ,11-13)
- * 
- * Rows 11, 8, 9 
- * 
- * Columns: 13, 14, 15
- */
+// Wheel Servo: P1
+// 
+// Lock Servo: P2
+// 
+// Green LEDs: P0 (Active 1-5)
+// 
+// Keypad LEDs: P16 (Active: 1-3 6-8, ,11-13)
+// 
+// Rows 11, 8, 9
+// 
+// Columns: 13, 14, 15
 function Row3 () {
     while (pins.digitalReadPin(DigitalPin.P13) == 0) {
         strip.setPixelColor(11, neopixel.rgb(100, 0, 100))
@@ -124,7 +122,6 @@ function Row1 () {
         basic.pause(500)
         ButtonPress("c")
     }
-    strip.showColor(neopixel.colors(NeoPixelColors.Black))
 }
 function ShowPattern () {
     greenled.setPixelColor(password.length, neopixel.colors(NeoPixelColors.Green))
@@ -134,38 +131,47 @@ function ShowPattern () {
             strip.setPixelColor(1, neopixel.colors(NeoPixelColors.Red))
             strip.show()
             basic.pause(500)
+            strip.showColor(neopixel.colors(NeoPixelColors.Black))
         } else if (value == "b") {
             strip.setPixelColor(2, neopixel.hsl(32, 255, 40))
             strip.show()
             basic.pause(500)
+            strip.showColor(neopixel.colors(NeoPixelColors.Black))
         } else if (value == "c") {
             strip.setPixelColor(3, neopixel.colors(NeoPixelColors.Yellow))
             strip.show()
             basic.pause(500)
+            strip.showColor(neopixel.colors(NeoPixelColors.Black))
         } else if (value == "d") {
             strip.setPixelColor(6, neopixel.colors(NeoPixelColors.Green))
             strip.show()
             basic.pause(500)
+            strip.showColor(neopixel.colors(NeoPixelColors.Black))
         } else if (value == "e") {
             strip.setPixelColor(7, neopixel.colors(NeoPixelColors.Blue))
             strip.show()
             basic.pause(500)
+            strip.showColor(neopixel.colors(NeoPixelColors.Black))
         } else if (value == "f") {
             strip.setPixelColor(8, neopixel.hsl(246, 250, 30))
             strip.show()
             basic.pause(500)
+            strip.showColor(neopixel.colors(NeoPixelColors.Black))
         } else if (value == "g") {
             strip.setPixelColor(11, neopixel.rgb(100, 0, 100))
             strip.show()
             basic.pause(500)
+            strip.showColor(neopixel.colors(NeoPixelColors.Black))
         } else if (value == "h") {
             strip.setPixelColor(12, neopixel.colors(NeoPixelColors.Purple))
             strip.show()
             basic.pause(500)
+            strip.showColor(neopixel.colors(NeoPixelColors.Black))
         } else {
             strip.setPixelColor(13, neopixel.colors(NeoPixelColors.White))
             strip.show()
             basic.pause(500)
+            strip.showColor(neopixel.colors(NeoPixelColors.Black))
         }
     }
     strip.showColor(neopixel.colors(NeoPixelColors.Black))
