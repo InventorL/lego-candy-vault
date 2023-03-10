@@ -36,6 +36,8 @@ function ButtonPress (letter: string) {
         if (password.includes(guess) && password.indexOf(guess) == 0) {
             if (guess.compare(password) == 0) {
                 guess = ""
+                greenled.setPixelColor(password.length, neopixel.colors(NeoPixelColors.Green))
+                greenled.show()
                 Guess_mode = false
             }
         } else {
@@ -128,6 +130,7 @@ function ShowPattern () {
     greenled.setPixelColor(password.length, neopixel.colors(NeoPixelColors.Green))
     greenled.show()
     basic.pause(500)
+    strip.showColor(neopixel.colors(NeoPixelColors.Black))
     for (let value of password) {
         if (value == "a") {
             strip.setPixelColor(1, neopixel.colors(NeoPixelColors.Red))
@@ -179,7 +182,6 @@ function ShowPattern () {
     }
     greenled.setPixelColor(password.length, neopixel.colors(NeoPixelColors.Black))
     greenled.show()
-    strip.showColor(neopixel.colors(NeoPixelColors.Black))
 }
 let Guess_mode = false
 let guess = ""
@@ -234,8 +236,6 @@ basic.forever(function () {
             basic.pause(500)
             winner()
         } else {
-            greenled.setPixelColor(password.length, neopixel.colors(NeoPixelColors.Green))
-            greenled.show()
             password = "" + password + Letters._pickRandom()
             ShowPattern()
             basic.pause(500)
