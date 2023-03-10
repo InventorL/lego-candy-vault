@@ -4,7 +4,7 @@
 // 
 // Green LEDs: P0 (Active 1-5)
 // 
-// Keypad LEDs: P16 (Active: 1-3 6-8, ,11-13)
+// Keypad LEDs: P16 (Active: 1-3 6-8, 11-13)
 // 
 // Rows 11, 8, 9
 // 
@@ -73,6 +73,7 @@ function Row2 () {
     }
 }
 function winner () {
+    pins.servoWritePin(AnalogPin.P1, 0)
     strip.setPixelColor(1, neopixel.colors(NeoPixelColors.Red))
     strip.show()
     basic.pause(200)
@@ -126,6 +127,7 @@ function Row1 () {
 function ShowPattern () {
     greenled.setPixelColor(password.length, neopixel.colors(NeoPixelColors.Green))
     greenled.show()
+    basic.pause(500)
     for (let value of password) {
         if (value == "a") {
             strip.setPixelColor(1, neopixel.colors(NeoPixelColors.Red))
@@ -173,10 +175,11 @@ function ShowPattern () {
             basic.pause(500)
             strip.showColor(neopixel.colors(NeoPixelColors.Black))
         }
+        basic.pause(100)
     }
-    strip.showColor(neopixel.colors(NeoPixelColors.Black))
     greenled.setPixelColor(password.length, neopixel.colors(NeoPixelColors.Black))
-    greenled.showColor(neopixel.colors(NeoPixelColors.Black))
+    greenled.show()
+    strip.showColor(neopixel.colors(NeoPixelColors.Black))
 }
 let Guess_mode = false
 let guess = ""
@@ -204,37 +207,8 @@ let Letters = [
 password = ""
 guess = ""
 Guess_mode = false
+greenled.setBrightness(200)
 basic.pause(1000)
-basic.forever(function () {
-    if (Locked == true) {
-        while (input.magneticForce(Dimension.X) < 65 && input.magneticForce(Dimension.X) > 55) {
-            pins.servoWritePin(AnalogPin.P2, 150)
-            Locked = false
-        }
-    }
-    if (Locked == false) {
-        pins.servoWritePin(AnalogPin.P2, 70)
-        Locked = true
-    }
-})
-basic.forever(function () {
-    if (Guess_mode == false) {
-        if (password.length == 5) {
-            music.playSoundEffect(music.builtinSoundEffect(soundExpression.twinkle), SoundExpressionPlayMode.InBackground)
-            greenled.setPixelColor(password.length, neopixel.colors(NeoPixelColors.Green))
-            greenled.show()
-            pins.servoWritePin(AnalogPin.P1, 150)
-            winner()
-        } else {
-            greenled.setPixelColor(password.length, neopixel.colors(NeoPixelColors.Green))
-            greenled.show()
-            basic.pause(500)
-            password = "" + password + Letters._pickRandom()
-            ShowPattern()
-            Guess_mode = true
-        }
-    }
-})
 basic.forever(function () {
     if (Guess_mode == true) {
         pins.digitalWritePin(DigitalPin.P11, 0)
@@ -246,5 +220,37 @@ basic.forever(function () {
         pins.digitalWritePin(DigitalPin.P9, 0)
         Row3()
         pins.digitalWritePin(DigitalPin.P9, 1)
+    }
+})
+basic.forever(function () {
+    if (Guess_mode == false) {
+        if (password.length == 5) {
+            music.playSoundEffect(music.builtinSoundEffect(soundExpression.twinkle), SoundExpressionPlayMode.InBackground)
+            greenled.setPixelColor(password.length, neopixel.colors(NeoPixelColors.Green))
+            greenled.show()
+            pins.servoWritePin(AnalogPin.P1, 40)
+            basic.pause(1000)
+            pins.servoWritePin(AnalogPin.P1, 80)
+            basic.pause(500)
+            winner()
+        } else {
+            greenled.setPixelColor(password.length, neopixel.colors(NeoPixelColors.Green))
+            greenled.show()
+            password = "" + password + Letters._pickRandom()
+            ShowPattern()
+            basic.pause(500)
+            Guess_mode = true
+        }
+    }
+})
+basic.forever(function () {
+    if (Locked == true) {
+        while (input.magneticForce(Dimension.X) < 115 && input.magneticForce(Dimension.X) > 95) {
+            pins.servoWritePin(AnalogPin.P2, 150)
+            Locked = false
+        }
+    } else {
+        pins.servoWritePin(AnalogPin.P2, 70)
+        Locked = true
     }
 })
