@@ -126,6 +126,12 @@ function Row1 () {
         ButtonPress("c")
     }
 }
+input.onLogoEvent(TouchButtonEvent.Touched, function () {
+    pins.servoWritePin(AnalogPin.P2, 180)
+})
+input.onLogoEvent(TouchButtonEvent.Released, function () {
+    pins.servoWritePin(AnalogPin.P2, 75)
+})
 function ShowPattern () {
     greenled.setPixelColor(password.length, neopixel.colors(NeoPixelColors.Green))
     greenled.show()
@@ -188,7 +194,7 @@ let guess = ""
 let password = ""
 let greenled: neopixel.Strip = null
 let strip: neopixel.Strip = null
-pins.servoWritePin(AnalogPin.P2, 70)
+pins.servoWritePin(AnalogPin.P2, 75)
 let Locked = true
 pins.servoWritePin(AnalogPin.P1, 0)
 strip = neopixel.create(DigitalPin.P16, 14, NeoPixelMode.RGB)
@@ -246,11 +252,11 @@ basic.forever(function () {
 basic.forever(function () {
     if (Locked == true) {
         while (input.magneticForce(Dimension.X) < 115 && input.magneticForce(Dimension.X) > 95) {
-            pins.servoWritePin(AnalogPin.P2, 150)
+            pins.servoWritePin(AnalogPin.P2, 180)
             Locked = false
         }
     } else {
-        pins.servoWritePin(AnalogPin.P2, 70)
+        pins.servoWritePin(AnalogPin.P2, 75)
         Locked = true
     }
 })
