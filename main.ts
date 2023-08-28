@@ -75,7 +75,6 @@ function Row2 () {
     }
 }
 function winner () {
-    pins.servoWritePin(AnalogPin.P1, 0)
     strip.setPixelColor(1, neopixel.colors(NeoPixelColors.Red))
     strip.show()
     basic.pause(200)
@@ -106,6 +105,12 @@ function winner () {
     strip.showColor(neopixel.colors(NeoPixelColors.Black))
     control.reset()
 }
+function opencandy () {
+    pins.servoWritePin(AnalogPin.P1, 115)
+    basic.pause(200)
+    pins.servoWritePin(AnalogPin.P1, 135)
+    basic.pause(500)
+}
 function Row1 () {
     while (pins.digitalReadPin(DigitalPin.P13) == 0) {
         strip.setPixelColor(1, neopixel.colors(NeoPixelColors.Red))
@@ -127,10 +132,13 @@ function Row1 () {
     }
 }
 input.onLogoEvent(TouchButtonEvent.Touched, function () {
-    pins.servoWritePin(AnalogPin.P2, 180)
-})
-input.onLogoEvent(TouchButtonEvent.Released, function () {
-    pins.servoWritePin(AnalogPin.P2, 75)
+    if (Locked == true) {
+        pins.servoWritePin(AnalogPin.P2, 70)
+        Locked = false
+    } else {
+        pins.servoWritePin(AnalogPin.P2, 0)
+        Locked = true
+    }
 })
 function ShowPattern () {
     greenled.setPixelColor(password.length, neopixel.colors(NeoPixelColors.Green))
@@ -194,9 +202,10 @@ let guess = ""
 let password = ""
 let greenled: neopixel.Strip = null
 let strip: neopixel.Strip = null
-pins.servoWritePin(AnalogPin.P2, 75)
-let Locked = true
-pins.servoWritePin(AnalogPin.P1, 0)
+let Locked = false
+Locked = true
+pins.servoWritePin(AnalogPin.P2, 0)
+pins.servoWritePin(AnalogPin.P1, 135)
 strip = neopixel.create(DigitalPin.P16, 14, NeoPixelMode.RGB)
 greenled = neopixel.create(DigitalPin.P0, 10, NeoPixelMode.RGB)
 strip.showColor(neopixel.colors(NeoPixelColors.Black))
@@ -236,10 +245,7 @@ basic.forever(function () {
             music.playSoundEffect(music.builtinSoundEffect(soundExpression.twinkle), SoundExpressionPlayMode.InBackground)
             greenled.setPixelColor(password.length, neopixel.colors(NeoPixelColors.Green))
             greenled.show()
-            pins.servoWritePin(AnalogPin.P1, 40)
-            basic.pause(1000)
-            pins.servoWritePin(AnalogPin.P1, 80)
-            basic.pause(500)
+            opencandy()
             winner()
         } else {
             password = "" + password + Letters._pickRandom()
@@ -250,13 +256,5 @@ basic.forever(function () {
     }
 })
 basic.forever(function () {
-    if (Locked == true) {
-        while (input.magneticForce(Dimension.X) < 115 && input.magneticForce(Dimension.X) > 95) {
-            pins.servoWritePin(AnalogPin.P2, 180)
-            Locked = false
-        }
-    } else {
-        pins.servoWritePin(AnalogPin.P2, 75)
-        Locked = true
-    }
+	
 })

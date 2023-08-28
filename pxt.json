@@ -5,7 +5,9 @@
         "core": "*",
         "radio": "*",
         "microphone": "*",
-        "neopixel": "github:microsoft/pxt-neopixel#v0.7.5"
+        "neopixel": "github:microsoft/pxt-neopixel#v0.7.5",
+        "pxt-mfrc522": "github:joy-it/pxt-rfid-mfrc522#1.0.1",
+        "Grove": "github:seeed-studio/pxt-grove#v0.5.0"
     },
     "files": [
         "main.ts",
@@ -20,7 +22,7 @@
         "branch": "v5.0.12",
         "tag": "v5.0.12",
         "commits": "https://github.com/microsoft/pxt-microbit/commits/97491d6832cccab6b5bdc05b58e4c6b5dcc18cdd",
-        "target": "5.0.12",
+        "target": "6.0.17",
         "pxt": "8.0.7",
         "targetId": "microbit"
     },
